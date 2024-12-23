@@ -51,12 +51,11 @@ app.post('/api/reset', (req, res) => {
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-// Catch-all to serve index.html
+// Catch-all route to serve index.html
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Serverless function handler
 export default (req: VercelRequest, res: VercelResponse) => {
-	return app(req as any, res as any);
+	app(req as any, res as any);
 };
