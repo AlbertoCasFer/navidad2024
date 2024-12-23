@@ -1,15 +1,15 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
 
 const app = express();
 const DATA_FILE = path.join(__dirname, '../data.json');
 
-// Middleware para manejar JSON y servir archivos estáticos
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Rutas API
+// API Routes
 app.get('/api/data', (req, res) => {
 	const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 	res.json(data);
@@ -51,9 +51,12 @@ app.post('/api/reset', (req, res) => {
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-// Manejar cualquier otra ruta con el archivo index.html
+// Catch-all to serve index.html
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public', 'index.html'));
+	res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-module.exports = app;
+// Serverless function handler
+export default (req: VercelRequest, res: VercelResponse) => {
+	return app(req as any, res as any);
+};
