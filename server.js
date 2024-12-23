@@ -10,12 +10,12 @@ const DATA_FILE = './data.json';
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Funciones para leer y guardar datos
+// Función para leer y guardar datos en data.json
 const getData = () => JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 const saveData = (data) =>
 	fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 
-// Rutas
+// Rutas API
 app.get('/api/data', (req, res) => {
 	const data = getData();
 	res.json(data);
@@ -62,7 +62,8 @@ app.post('/api/reset', (req, res) => {
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-app.get('/', (req, res) => {
+// Manejar otras rutas y servir index.html
+app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
