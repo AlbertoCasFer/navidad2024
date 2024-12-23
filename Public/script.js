@@ -4,7 +4,7 @@ const nameInput = document.getElementById('nameInput');
 const resultMessage = document.getElementById('resultMessage');
 
 // URL del backend
-const API_URL = 'http://localhost:3000/api/participate';
+const API_URL = '/api/participate';
 
 // Manejar el envío del formulario
 form.addEventListener('submit', async (event) => {
