@@ -1,16 +1,13 @@
-console.log('Index.js está corriendo en Vercel');
-
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const DATA_FILE = './data.json';
+const DATA_FILE = path.join(__dirname, '../data.json');
 
-// Middleware para manejar JSON y archivos estáticos
+// Middleware para manejar JSON y servir archivos estáticos
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Rutas API
 app.get('/api/data', (req, res) => {
@@ -54,12 +51,9 @@ app.post('/api/reset', (req, res) => {
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-// Manejar cualquier otra ruta
+// Manejar cualquier otra ruta con el archivo index.html
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public', 'index.html'));
+	res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-	console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+module.exports = app;
