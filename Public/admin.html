@@ -13,42 +13,42 @@
     <h1>Panel de Administrador</h1>
     <ul id="assignments"></ul>
     <button id="resetButton"
-      style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">
+      style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
       Reiniciar Asignaciones
     </button>
-    <a href="index.html"
-      style="color: #D82626; text-decoration: underline; display: block; margin-top: 10px;">Volver</a>
+    <a href="index.html" style="color: #D82626; text-decoration: underline;">Volver</a>
   </div>
 
   <script>
-    // Obtener los datos del backend
+    // Obtener las asignaciones del backend
     async function fetchAssignments() {
       try {
-        const response = await fetch("http://localhost:3000/api/admin");
+        const response = await fetch("http://localhost:3000/api/data");
         const data = await response.json();
         const list = document.getElementById("assignments");
 
-        if (Object.keys(data).length === 0) {
+        // Si no hay asignaciones, mostrar un mensaje
+        if (Object.keys(data.assigned).length === 0) {
           list.innerHTML = "<li>No hay asignaciones todavía.</li>";
           return;
         }
 
         // Mostrar las asignaciones
-        for (const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(data.assigned)) {
           const listItem = document.createElement("li");
           listItem.textContent = `${key} -> ${value}`;
           list.appendChild(listItem);
         }
       } catch (error) {
-        console.error("Error al obtener asignaciones:", error);
+        console.error("Error al obtener las asignaciones:", error);
       }
     }
 
+    // Llamar a la función para mostrar las asignaciones
     fetchAssignments();
 
-    const resetButton = document.getElementById("resetButton");
-
-    resetButton.addEventListener("click", async () => {
+    // Configurar el botón de reinicio
+    document.getElementById("resetButton").addEventListener("click", async () => {
       if (confirm("¿Estás seguro de que deseas reiniciar las asignaciones?")) {
         try {
           const response = await fetch("http://localhost:3000/api/reset", {
@@ -63,7 +63,6 @@
       }
     });
   </script>
-
 </body>
 
 </html>
