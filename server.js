@@ -62,6 +62,10 @@ app.post('/api/reset', (req, res) => {
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
 	console.log(`Servidor corriendo en http://localhost:${PORT}`);
