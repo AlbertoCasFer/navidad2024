@@ -1,3 +1,5 @@
+console.log('Index.js está corriendo en Vercel');
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
