@@ -10,18 +10,17 @@ const DATA_FILE = './data.json';
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Funciones para leer y guardar datos en data.json
+// Funciones para leer y guardar datos
 const getData = () => JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 const saveData = (data) =>
 	fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 
-// Ruta para obtener participantes y asignaciones
+// Rutas
 app.get('/api/data', (req, res) => {
 	const data = getData();
 	res.json(data);
 });
 
-// Ruta para participar en el intercambio
 app.post('/api/participate', (req, res) => {
 	const { name } = req.body;
 	const data = getData();
@@ -56,26 +55,14 @@ app.post('/api/participate', (req, res) => {
 	});
 });
 
-// Ruta para obtener las asignaciones como admin
-app.get('/api/admin', (req, res) => {
-	const data = getData();
-	res.json(data.assigned);
-});
-
-// Ruta para reiniciar las asignaciones
 app.post('/api/reset', (req, res) => {
 	const data = getData();
-
-	// Reiniciar las asignaciones
 	data.assigned = {};
-
-	// Guardar los datos actualizados
 	saveData(data);
-
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-// Iniciar el servidor
+// Iniciar servidor
 app.listen(PORT, () => {
 	console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
