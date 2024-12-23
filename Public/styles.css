@@ -1,0 +1,135 @@
+/* Fondo general */
+body {
+	font-family: 'Arial', sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #0b6623; /* Verde navideño */
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* Contenedor principal */
+.container {
+	text-align: center;
+	padding: 20px;
+	background-color: rgba(
+		255,
+		255,
+		255,
+		0.9
+	); /* Fondo blanco con transparencia */
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+	width: 90%;
+	max-width: 400px;
+	position: relative;
+}
+
+/* Título */
+h1 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+	color: #d82626; /* Rojo navideño */
+}
+
+p {
+	color: black; /* Cambiar el color del texto a negro */
+	font-size: 1.1rem; /* Ajustar el tamaño si lo deseas */
+}
+
+/* Input */
+input {
+	width: calc(100% - 20px);
+	padding: 10px;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+}
+
+/* Botón */
+button {
+	padding: 10px 20px;
+	font-size: 1rem;
+	border: none;
+	border-radius: 5px;
+	background-color: #d82626;
+	color: white;
+	cursor: pointer;
+	transition: 0.3s ease;
+}
+
+button:hover {
+	background-color: #a62222;
+}
+
+/* Mensaje */
+#resultMessage {
+	margin-top: 20px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #0b6623;
+}
+
+/* Cambiar el color de las asignaciones a negro */
+ul#assignments li {
+	color: black;
+	font-size: 1rem; /* Opcional: ajustar el tamaño del texto */
+}
+
+/* Iconos de cajitas */
+@keyframes float {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.box {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-image: url('https://img.icons8.com/color/48/000000/christmas-gift.png');
+	background-size: cover;
+	animation: float 3s infinite ease-in-out;
+	opacity: 0.8;
+}
+
+.box:nth-child(1) {
+	top: 10%;
+	left: 20%;
+	animation-delay: 0s;
+}
+
+.box:nth-child(2) {
+	top: 50%;
+	left: 80%;
+	animation-delay: 1s;
+}
+
+.box:nth-child(3) {
+	top: 30%;
+	left: 50%;
+	animation-delay: 2s;
+}
+
+.box:nth-child(4) {
+	top: 70%;
+	left: 10%;
+	animation-delay: 3s;
+}
+
+.box:nth-child(5) {
+	top: 80%;
+	left: 70%;
+	animation-delay: 1.5s;
+}
