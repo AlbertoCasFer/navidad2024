@@ -10,25 +10,15 @@ const DATA_FILE = './data.json';
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para la página principal (index.html)
-app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Funciones para leer y guardar datos
-const getData = () => JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-const saveData = (data) =>
-	fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-
 // Rutas API
 app.get('/api/data', (req, res) => {
-	const data = getData();
+	const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 	res.json(data);
 });
 
 app.post('/api/participate', (req, res) => {
 	const { name } = req.body;
-	const data = getData();
+	const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 	const { participants, assigned } = data;
 
 	if (assigned[name]) {
@@ -45,25 +35,24 @@ app.post('/api/participate', (req, res) => {
 		return res.status(400).json({ message: 'No hay nombres disponibles.' });
 	}
 
-	const randomIndex = Math.floor(Math.random() * availableNames.length);
-	const assignedName = availableNames[randomIndex];
+	const assignedName =
+		availableNames[Math.floor(Math.random() * availableNames.length)];
 	assigned[name] = assignedName;
 
-	saveData({ participants, assigned });
-
+	fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 	res.json({
 		message: `¡Gracias por participar, ${name}! Te tocó: ${assignedName}.`,
 	});
 });
 
 app.post('/api/reset', (req, res) => {
-	const data = getData();
+	const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
 	data.assigned = {};
-	saveData(data);
+	fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 	res.json({ message: 'Las asignaciones han sido reiniciadas.' });
 });
 
-// Ruta para manejar cualquier otro archivo no definido
+// Manejar cualquier otra ruta
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
